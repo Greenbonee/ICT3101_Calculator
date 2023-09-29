@@ -5,11 +5,17 @@ namespace ICT3101_Calculator.UnitTests
     public class CalculatorTests
     {
         private Calculator _calculator;
+
+        // Lab 4 Q8
+        private FileReader getTheMagic;
         [SetUp]
         public void Setup()
         {
             // Arrange
             _calculator = new Calculator();
+
+            // Lab 4 Q8
+            getTheMagic = new FileReader();
         }
 
         // Old add test case from Lab 1
@@ -224,5 +230,59 @@ namespace ICT3101_Calculator.UnitTests
             // Assert
             Assert.That(() => _calculator.UnknownFunctionB(4, 5), Throws.ArgumentException);
         }*/
+
+        // Lab 4 Q4 If number of lines is 4 as .txt file contatins 3, -1, 0, 1
+        [Test]
+        public void MagicNumber_WithChoiceNegative_ResultIsZero()
+        {
+            // Act Q8
+            double result = _calculator.GenMagicNum(-1, getTheMagic);
+            // Assert
+            Assert.That(result, Is.EqualTo(0));
+        }
+        [Test]
+        public void MagicNumber_StringRetrievedIsPositiveNumber_ResultIsDoubleTheNumber()
+        {
+            // Act Q8
+            double result = _calculator.GenMagicNum(0, getTheMagic);
+            // Assert
+            Assert.That(result, Is.EqualTo(6));
+        }
+
+        [Test]
+        public void MagicNumber_WithStringRetrievedIsNegativeNumber_ResultIsPositiveAndDoubleTheNumber()
+        {
+            // Act Q8
+            double result = _calculator.GenMagicNum(1, getTheMagic);
+            // Assert
+            Assert.That(result, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void MagicNumber_WithStringRetrievedIsZero_ResultIsZero()
+        {
+            // Act Q8
+            double result = _calculator.GenMagicNum(2, getTheMagic);
+            // Assert
+            Assert.That(result, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void MagicNumber_WithChoiceNumberEqualsToNumberOfLines_ResultIsZero()
+        {
+            // Act Q8
+            double result = _calculator.GenMagicNum(4, getTheMagic);
+            // Assert
+            Assert.That(result, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void MagicNumber_WithChoiceMoreThanNumberOfLines_ResultIsZero()
+        {
+            // Act Q8
+            double result = _calculator.GenMagicNum(5, getTheMagic);
+            // Assert
+            Assert.That(result, Is.EqualTo(0));
+        }
     }
 }

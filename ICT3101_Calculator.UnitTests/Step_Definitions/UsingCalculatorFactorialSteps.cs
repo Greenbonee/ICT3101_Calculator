@@ -17,7 +17,7 @@ namespace ICT3101_Calculator.UnitTests.Step_Definitions
         [When(@"I have entered ""(.*)"" into the calculator and press factorial")]
         public void WhenIHaveEnteredIntoTheCalculatorAndPressFactorial(int p0)
         {
-            _result = calculatorDetails.calculator.Factorial(p0);
+            if (calculatorDetails.calculator != null) _result = calculatorDetails.calculator.Factorial(p0);
         }
         
         [Then(@"the factorial result should be ""(.*)""")]

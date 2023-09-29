@@ -18,7 +18,7 @@ namespace ICT3101_Calculator.UnitTests.Step_Definitions
         [When(@"I have entered ""(.*)"" and ""(.*)"" into the calculator and press divide")]
         public void WhenIHaveEnteredAndIntoTheCalculatorAndPressDivide(double p0, double p1)
         {
-            _result = calculatorDetails.calculator.Divide(p0, p1);
+            if (calculatorDetails.calculator != null) _result = calculatorDetails.calculator.Divide(p0, p1);
         }
         
         [Then(@"the division result should be ""(.*)""")]

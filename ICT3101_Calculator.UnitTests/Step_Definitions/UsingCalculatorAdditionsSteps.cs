@@ -6,7 +6,7 @@ namespace ICT3101_Calculator.UnitTests.Step_Definitions
 {
     public class CalculatorDetails
     {
-        public Calculator calculator;
+        public Calculator? calculator;
     }
     [Binding]
     public class UsingCalculatorAdditionsSteps
@@ -33,7 +33,7 @@ namespace ICT3101_Calculator.UnitTests.Step_Definitions
             //_result = _calculator.Add(p0, p1);
 
             // Lab 2.1 Q13: Addition with context injection
-            _result = calculatorDetails.calculator.Add(p0, p1);
+            if (calculatorDetails.calculator != null) _result = calculatorDetails.calculator.Add(p0, p1);
         }
         [Then(@"the result should be ""(.*)""")]
         public void ThenTheResultShouldBeOnTheScreen(int p0)

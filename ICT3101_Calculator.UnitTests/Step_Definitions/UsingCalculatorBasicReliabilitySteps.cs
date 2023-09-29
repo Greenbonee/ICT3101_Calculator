@@ -18,13 +18,15 @@ namespace ICT3101_Calculator.UnitTests.Step_Definitions
         [When(@"I have entered ""(.*)"", ""(.*)"" and ""(.*)"" into the calculator and press failure intensity")]
         public void WhenIHaveEnteredAndIntoTheCalculatorAndPressFailureIntensity(double p0, double p1, double p2)
         {
-            _result = calculatorDetails.calculator.CurrentFailureIntensity(p0, p1, p2);
+            if (calculatorDetails.calculator != null)
+                _result = calculatorDetails.calculator.CurrentFailureIntensity(p0, p1, p2);
         }
         
         [When(@"I have entered ""(.*)"", ""(.*)"" and ""(.*)"" into the calculator and press expected failures")]
         public void WhenIHaveEnteredAndIntoTheCalculatorAndPressExpectedFailures(double p0, double p1, double p2)
         {
-            _result = calculatorDetails.calculator.AverageNumberofExpectedFailures(p0, p1, p2);
+            if (calculatorDetails.calculator != null)
+                _result = calculatorDetails.calculator.AverageNumberOfExpectedFailures(p0, p1, p2);
         }
         
         [Then(@"the failure intensity result should be ""(.*)""")]

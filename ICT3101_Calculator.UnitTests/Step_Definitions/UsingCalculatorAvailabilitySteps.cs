@@ -18,13 +18,13 @@ namespace ICT3101_Calculator.UnitTests.Step_Definitions
         [When(@"I have entered ""(.*)"" and ""(.*)"" into calculator the and press MTBF")]
         public void WhenIHaveEnteredAndIntoCalculatorTheAndPressMTBF(double p0, double p1)
         {
-            _result = calculatorDetails.calculator.MTBF(p0, p1);
+            if (calculatorDetails.calculator != null) _result = calculatorDetails.calculator.MTBF(p0, p1);
         }
         
         [When(@"I have entered ""(.*)"" and ""(.*)"" into the calculator and press Availability")]
         public void WhenIHaveEnteredAndIntoTheCalculatorAndPressAvailability(double p0, double p1)
         {
-            _result = calculatorDetails.calculator.Availability(p0, p1);
+            if (calculatorDetails.calculator != null) _result = calculatorDetails.calculator.Availability(p0, p1);
         }
         
         [Then(@"the MTBF result should be ""(.*)""")]

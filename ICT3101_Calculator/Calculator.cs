@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-/*ICT3101: Lab 2.3
-Prepared by: Jerone Poh
-*/
+﻿using System.Globalization;
 
 namespace ICT3101_Calculator
 {
     public class Calculator
     {
-        public Calculator() { }
-        public double DoOperation(double num1, double num2, double num3, string op)
+        private readonly FileReader _getTheMagic;
+        public Calculator() {
+            // Lab 4 Q4
+            _getTheMagic = new FileReader();
+        }
+        public double DoOperation(double num1, double num2, double num3, string? op)
         {
             double result = double.NaN; // Default value
             // Use a switch statement to do the math.
@@ -50,7 +48,7 @@ namespace ICT3101_Calculator
                     // Get result of Unknown Function B
                     //result = UnknownFunctionB(num1, num2);
                     break;
-                case "mtbf":
+                case "MTBF":
                     // Get result of MTBF
                     result = MTBF(num1, num2);
                     break;
@@ -64,7 +62,7 @@ namespace ICT3101_Calculator
                     break;
                 case "nef":
                     // Get result of average number of expected failures using Basic Musa Model
-                    result = AverageNumberofExpectedFailures(num1, num2, num3);
+                    result = AverageNumberOfExpectedFailures(num1, num2, num3);
                     break;
                 case "dd":
                     // Get result of defect density 
@@ -74,8 +72,11 @@ namespace ICT3101_Calculator
                     // Get result of SSI for second release
                     result = SSISecondRelease(num1, num2, num3);
                     break;
-                // Return text for an incorrect option entry.
-                default:
+                case "magic":
+                    // Get magic number
+                    //result = GenMagicNum(num1);
+
+                    result = GenMagicNum(num1, _getTheMagic);
                     break;
             }
             return result;
@@ -89,19 +90,14 @@ namespace ICT3101_Calculator
         // Lab 2.1 Q10: Add with zero as special cases
         public double Add(double num1, double num2)
         {
-            string bin1 = num1.ToString();
+            string bin1 = num1.ToString(CultureInfo.CurrentCulture);
             bin1 = bin1 + "00";
 
-            string bin2 = num2.ToString();
+            string bin2 = num2.ToString(CultureInfo.CurrentCulture);
 
             double finalNum1 = Convert.ToDouble(Convert.ToInt32(bin1, 2));
             double finalNum2 = Convert.ToDouble(Convert.ToInt32(bin2, 2));
             return (finalNum1 + finalNum2);
-        }
-
-        public double Add2(double num1, double num2)
-        {
-            return num1 + num2;
         }
         public double Subtract(double num1, double num2)
         {
@@ -212,32 +208,56 @@ namespace ICT3101_Calculator
         {
             return (Multiply(num1, 1 - Divide(num2, num3)));
         }
-        public double AverageNumberofExpectedFailures(double num1, double num2, double num3)
+        public double AverageNumberOfExpectedFailures(double num1, double num2, double num3)
         {
             return (Multiply(num1, 1 - Math.Pow(Math.E, Divide(Multiply(-num2, num3), num1))));
         }
 
         // Lab 2.3 Q22
-        // Logarithmic Model
-        public decimal CurrentFailureIntensityLogModel(double initialFailure, double decayParam, double avgExptFailure)
+        public double DefectDensity(double defects, double csi)
         {
-            return decimal.Round((decimal)Multiply(initialFailure, Math.Exp(Multiply(-decayParam, avgExptFailure))), 2);
+            return (defects / csi);
         }
 
-        public int LogAverageNumberofExpectedFailures(double time, double decayParam, double initialFailure)
+        public double SSISecondRelease(double SSIOld, double csi, double changedCode)
         {
-            return (int)Multiply(Math.Log(Add2(Multiply(initialFailure, decayParam * time), 1)), Divide(1, decayParam));
+            return (Subtract((SSIOld + csi), changedCode));
         }
 
-        // Lab 2.3 Q22
-        public double DefectDensity(double defects, double CSI)
+        // Lab 4 Q4
+        public double GenMagicNumBase(double input)
         {
-            return (defects / CSI);
+            double result = 0;
+            int choice = Convert.ToInt16(input);
+
+            // Lab 4 Q4
+            //Dependency------------------------------
+            FileReader getTheMagic = new FileReader();
+            //----------------------------------------
+            string[] magicStrings = getTheMagic.Read(@"MagicNumbers.txt");
+
+            if ((choice >= 0) && (choice < magicStrings.Length))
+            {
+                result = Convert.ToDouble(magicStrings[choice]);
+            }
+            result = (result > 0) ? (2 * result) : (-2 * result);
+            return result;
         }
 
-        public double SSISecondRelease(double SSIOld, double CSI, double changedCode)
+        // Lab 4 Q8
+        public double GenMagicNum(double input, IFileReader fileReader)
         {
-            return (Subtract((SSIOld + CSI), changedCode));
+            double result = 0;
+            int choice = Convert.ToInt16(input);
+
+            // Lab 4 Q8
+            string[] magicStrings = fileReader.Read(@"MagicNumbers.txt");
+            if ((choice >= 0) && (choice < magicStrings.Length))
+            {
+                result = Convert.ToDouble(magicStrings[choice]);
+            }
+            result = (result > 0) ? (2 * result) : (-2 * result);
+            return result;
         }
     }
 }

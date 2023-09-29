@@ -18,13 +18,14 @@ namespace ICT3101_Calculator.UnitTests.Step_Definitions
         [When(@"I have entered ""(.*)"" and ""(.*)"" into calculator the and press Defect Density")]
         public void WhenIHaveEnteredAndIntoCalculatorTheAndPressDefectDensity(double p0, double p1)
         {
-            _result = calculatorDetails.calculator.DefectDensity(p0, p1);
+            if (calculatorDetails.calculator != null) _result = calculatorDetails.calculator.DefectDensity(p0, p1);
         }
         
         [When(@"I have entered ""(.*)"", ""(.*)"" and ""(.*)"" into the calculator and press SSI")]
         public void WhenIHaveEnteredAndIntoTheCalculatorAndPressSSI(double p0, double p1, double p2)
         {
-            _result = calculatorDetails.calculator.SSISecondRelease(p0, p1, p2);
+            if (calculatorDetails.calculator != null)
+                _result = calculatorDetails.calculator.SSISecondRelease(p0, p1, p2);
         }
         
         [Then(@"the defect density result should be ""(.*)""")]
