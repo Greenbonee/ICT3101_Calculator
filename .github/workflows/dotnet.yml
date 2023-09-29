@@ -16,7 +16,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./SubFolderThatContainsSolutionFile/
+        working-directory: ./ICT3101_Calculator/
 
     steps:
     - uses: actions/checkout@v3
